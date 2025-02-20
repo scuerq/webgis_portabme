@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
         onEachFeature: onEachFeature
     }).addTo(map);
 
+    // Zoom to the geojsonLayer bounds
+    map.fitBounds(geojsonLayer.getBounds());
+    
     navigateButton.addEventListener('click', () => {
         if (currentCoordinates) {
             const lat = currentCoordinates.lat;
