@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add Leaflet Search control
     const searchControl = new L.Control.Search({
         layer: geojsonLayer,
-        propertyName: 'name', // Specify the property to search by (e.g., 'name')
+        propertyName: 'Libellā', // Specify the property to search by (e.g., 'name')
         marker: false,
         moveToLocation: function(latlng, title, map) {
             // Set the view to the searched location
