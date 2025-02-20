@@ -5,24 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    const geojsonData = {
-        "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [2.3522, 48.8566]
-                },
-                "properties": {
-                    "name": "Point 1",
-                    "description": "Description of Point 1"
-                }
-            },
-            // Add more points here
-        ]
-    };
-
     const infoBox = document.getElementById('info-box');
     const pointInfo = document.getElementById('point-info');
     const navigateButton = document.getElementById('navigate-button');
@@ -36,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    L.geoJSON(geojsonData, {
+    L.geoJSON(semader, {
         onEachFeature: onEachFeature
     }).addTo(map);
 
