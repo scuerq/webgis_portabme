@@ -19,11 +19,32 @@ document.addEventListener('DOMContentLoaded', () => {
 function showPopup(e, properties) {
     currentCoordinates = e.latlng;
     let infoBox = document.getElementById('info-box');
+    let overlay = document.getElementById('popup-overlay');
     if (infoBox) {
         infoBox.remove();
     }
+    if (overlay) {
+        overlay.remove();
+    }
     infoBox = createPopupContent(properties);
-    infoBox.classList.remove('hidden');
+    overlay = createOverlay();
+    document.body.appendChild(overlay);
+    document.body.appendChild(infoBox);
+    infoBox.classList.add('show');
+    overlay.classList.add('show');
+}
+
+function hidePopup() {
+    let infoBox = document.getElementById('info-box');
+    let overlay = document.getElementById('popup-overlay');
+    if (infoBox) {
+        infoBox.classList.remove('show');
+        setTimeout(() => infoBox.remove(), 300); // Matches the transition duration
+    }
+    if (overlay) {
+        overlay.classList.remove('show');
+        setTimeout(() => overlay.remove(), 300); // Matches the transition duration
+    }
 }
 
 function onEachFeature(feature, layer) {
@@ -35,14 +56,15 @@ function onEachFeature(feature, layer) {
 function createPopupContent(properties) {
     const infoBox = document.createElement('div');
     infoBox.id = 'info-box';
-    infoBox.className = 'hidden';
+    infoBox.className = 'popup';
 
-    const title = document.createElement('h2');
+    const title = document.createElement('div');
+    title.className = 'popup-header';
     title.innerText = 'Point Information';
     infoBox.appendChild(title);
 
     const pointInfo = document.createElement('div');
-    pointInfo.id = 'point-info';
+    pointInfo.className = 'popup-content';
     let propertiesHtml = '';
     for (const [key, value] of Object.entries(properties)) {
         propertiesHtml += `<strong>${key}</strong>: ${value}<br>`;
@@ -75,6 +97,13 @@ function createPopupContent(properties) {
         }
     });
 
-    document.body.appendChild(infoBox);
     return infoBox;
+}
+
+function createOverlay() {
+    const overlay = document.createElement('div');
+    overlay.id = 'popup-overlay';
+    overlay.className = 'popup-overlay';
+    overlay.addEventListener('click', hidePopup);
+    return overlay;
 }
