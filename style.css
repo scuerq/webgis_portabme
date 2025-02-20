@@ -34,6 +34,7 @@ body, html {
   border-radius: 10px;
   z-index: 1000;
   display: none; /* Hidden by default */
+  transition: top 0.3s ease, left 0.3s ease; /* Ajout de transitions pour une meilleure animation */
 }
 
 /* Popup header */
@@ -73,10 +74,11 @@ body, html {
   opacity: 0; /* Initial state */
 }
 
+/* Popup transitions */
 .popup.show {
+  display: block; /* Show popup */
   opacity: 1; /* Visible state */
 }
-
 /* Responsive rules */
 @media (max-width: 600px) {
   .popup {
