@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
             map.setView(latlng, 17); // Adjust zoom level if needed
         }
     });
-    
+
+    map.addControl(searchControl);
 });
 
 function showPopup(e, properties) {
