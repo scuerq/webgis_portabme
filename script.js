@@ -1,3 +1,5 @@
+var geojsonLayer;
+
 document.addEventListener('DOMContentLoaded', () => {
     const map = L.map('map').setView([48.8566, 2.3522], 13); // Centered on Paris, for example
 
@@ -18,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    L.geoJSON(semader, {
+    geojsonLayer=L.geoJSON(semader, {
         onEachFeature: onEachFeature
     }).addTo(map);
 
