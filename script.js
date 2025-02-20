@@ -14,6 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Zoom to the geojsonLayer bounds
     map.fitBounds(geojsonLayer.getBounds());
+
+    // Add Leaflet Search control
+    const searchControl = new L.Control.Search({
+        layer: geojsonLayer,
+        propertyName: 'name', // Specify the property to search by (e.g., 'name')
+        marker: false,
+        moveToLocation: function(latlng, title, map) {
+            // Set the view to the searched location
+            map.setView(latlng, 17); // Adjust zoom level if needed
+        }
+    });
+    
 });
 
 function showPopup(e, properties) {
