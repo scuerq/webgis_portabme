@@ -21,3 +21,65 @@ body, html {
 .hidden {
     display: none;
 }
+
+/* Popup container */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  z-index: 1000;
+  display: none; /* Hidden by default */
+}
+
+/* Popup header */
+.popup-header {
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Popup content */
+.popup-content {
+  padding: 20px;
+  font-size: 16px;
+}
+
+/* Popup overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none; /* Hidden by default */
+}
+
+/* Popup transitions */
+.popup.show,
+.popup-overlay.show {
+  display: block; /* Show popup and overlay */
+}
+
+.popup {
+  transition: opacity 0.3s ease;
+  opacity: 0; /* Initial state */
+}
+
+.popup.show {
+  opacity: 1; /* Visible state */
+}
+
+/* Responsive rules */
+@media (max-width: 600px) {
+  .popup {
+    width: 90%;
+  }
+}
