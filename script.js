@@ -1,5 +1,6 @@
 var geojsonLayer;
 var currentCoordinates;
+var searchControl;
 
 document.addEventListener('DOMContentLoaded', () => {
     const map = L.map('map').setView([48.8566, 2.3522], 13); // Centered on Paris, for example
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     map.fitBounds(geojsonLayer.getBounds());
 
     // Add Leaflet Search control
-    const searchControl = new L.Control.Search({
+    searchControl = new L.Control.Search({
         layer: geojsonLayer,
         propertyName: 'Libellā', // Specify the property to search by (e.g., 'name')
         marker: false,
