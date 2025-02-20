@@ -64,7 +64,6 @@ body, html {
 }
 
 /* Popup transitions */
-.popup.show,
 .popup-overlay.show {
   display: block; /* Show popup and overlay */
 }
