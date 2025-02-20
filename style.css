@@ -8,32 +8,33 @@ body, html {
     height: 100%;
 }
 
+/* Style for the overlay */
 .popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
     z-index: 999;
-    display: none; /* Hidden by default */
-    justify-content: center;
-    align-items: center;
 }
 
 .popup-overlay.show {
-    display: flex; /* Show popup and overlay with flex for centering */
+    display: block;
 }
 
 .popup {
+    position: absolute;
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: none; /* Hidden by default */
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Transitions for better animation */
-    opacity: 0;
-    transform: translateY(-50px);
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
 }
 
 .popup.show {
@@ -41,3 +42,26 @@ body, html {
     opacity: 1;
     transform: translateY(0);
 }
+.popup-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.popup-content {
+    margin-bottom: 10px;
+}
+
+#navigate-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#navigate-button:hover {
+    background-color: #0056b3;
+}
+
