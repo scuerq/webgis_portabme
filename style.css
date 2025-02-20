@@ -17,13 +17,27 @@ body, html {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
     display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
 }
 
 .popup-overlay.show {
-    display: block; /* Show popup and overlay */
+    display: flex; /* Show popup and overlay with flex for centering */
 }
 
 .popup {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     display: none; /* Hidden by default */
-    transition: top 0.3s ease, left 0.3s ease; /* Ajout de transitions pour une meilleure animation */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Transitions for better animation */
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+.popup.show {
+    display: block; /* Show popup */
+    opacity: 1;
+    transform: translateY(0);
 }
