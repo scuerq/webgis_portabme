@@ -58,13 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function onEachFeature(feature, layer) {
         layer.on('click', function (e) {
-            currentCoordinates = e.latlng;
-            let infoBox = document.getElementById('info-box');
-            if (infoBox) {
-                infoBox.remove();
-            }
-            infoBox = createPopupContent(feature.properties);
-            infoBox.classList.remove('hidden');
+           showPopup(e, feature.properties);
         });
     }
 
@@ -75,3 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Zoom to the geojsonLayer bounds
     map.fitBounds(geojsonLayer.getBounds());
 });
+
+function showPopup(e, properties) {
+    currentCoordinates = e.latlng;
+    let infoBox = document.getElementById('info-box');
+    if (infoBox) {
+        infoBox.remove();
+    }
+    infoBox = createPopupContent(properties);
+    infoBox.classList.remove('hidden');
+}
