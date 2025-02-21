@@ -1,105 +1,65 @@
-var geojsonLayer;
-var currentCoordinates;
-var searchControl;
+// Initialisation de la carte
+var map = L.map('map').setView([48.8566, 2.3522], 13);
 
-document.addEventListener('DOMContentLoaded', () => {
-    const map = L.map('map').setView([48.8566, 2.3522], 13); // Centered on Paris, for example
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    geojsonLayer = L.geoJSON(semader, {
-        onEachFeature: onEachFeature
-    }).addTo(map);
-
-    // Zoom to the geojsonLayer bounds
-    map.fitBounds(geojsonLayer.getBounds());
-
-    // Add Leaflet Search control
-    searchControl = new L.Control.Search({
-        layer: geojsonLayer,
-        propertyName: 'Libellā', // Specify the property to search by (e.g., 'name')
-        marker: false,
-        moveToLocation: function(latlng, title, map) {
-            // Set the view to the searched location
-            map.setView(latlng, 17); // Adjust zoom level if needed
-        }
-    });
-
-    map.addControl(searchControl);
+// Ajout du contrôle de localisation
+targetLocation = null;
+map.locate({setView: true, maxZoom: 16});
+map.on('locationfound', function(e) {
+    targetLocation = e.latlng;
+    L.marker(e.latlng).addTo(map).bindPopup('Vous êtes ici').openPopup();
 });
 
+// Ajout du bouton pour réinitialiser la vue
+var resetButton = L.control({position: 'topright'});
+resetButton.onAdd = function(map) {
+    var div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+    div.innerHTML = '<button id="reset-map" title="Réinitialiser la vue">🔄</button>';
+    div.onclick = function() { map.setView([48.8566, 2.3522], 13); };
+    return div;
+};
+resetButton.addTo(map);
+
+// Chargement des données GeoJSON
+var geojsonLayer = L.geoJSON(semader, {
+    onEachFeature: function(feature, layer) {
+        layer.on('click', function(e) {
+            showSidebar(e, feature.properties);
+        });
+    }
+}).addTo(map);
+
+map.fitBounds(geojsonLayer.getBounds());
+
+// Ajout du contrôle de recherche
+var searchControl = new L.Control.Search({
+    layer: geojsonLayer,
+    propertyName: 'Libellé',
+    marker: false,
+    moveToLocation: function(latlng, title, map) {
+        map.setView(latlng, 17);
+    }
+}).addTo(map);
+
+// Gestion du panneau latéral
 function showSidebar(e, properties) {
-    currentCoordinates = e.latlng;
     let sidebar = document.getElementById('sidebar');
     let sidebarContent = document.getElementById('sidebar-content');
-    
-    // Utiliser createPopupContent pour générer le contenu
-    let content = createPopupContent(properties);
-    sidebarContent.innerHTML = '';
-    sidebarContent.appendChild(content);
-
-    // Afficher le panneau latéral
+    sidebarContent.innerHTML = `<h3>Informations</h3>`;
+    Object.entries(properties).forEach(([key, value]) => {
+        sidebarContent.innerHTML += `<p><strong>${key}:</strong> ${value}</p>`;
+    });
     sidebar.classList.add('show');
 }
 
-function hideSidebar() {
-    let sidebar = document.getElementById('sidebar');
-    sidebar.classList.remove('show');
-}
+document.getElementById('close-sidebar').addEventListener('click', function() {
+    document.getElementById('sidebar').classList.remove('show');
+});
 
-document.getElementById('close-sidebar').addEventListener('click', hideSidebar);
-
-function onEachFeature(feature, layer) {
-    layer.on('click', function (e) {
-        showSidebar(e, feature.properties);
-    });
-}
-
-function createPopupContent(properties) {
-    const infoBox = document.createElement('div');
-    infoBox.id = 'info-box';
-    infoBox.className = 'sidebar';
-
-    const title = document.createElement('div');
-    title.className = 'sidebar-header';
-    title.innerText = 'Point Information';
-    infoBox.appendChild(title);
-
-    const pointInfo = document.createElement('div');
-    pointInfo.className = 'sidebar-content';
-    let propertiesHtml = '';
-    for (const [key, value] of Object.entries(properties)) {
-        propertiesHtml += `<strong>${key}</strong>: ${value}<br>`;
-    }
-    pointInfo.innerHTML = propertiesHtml;
-    infoBox.appendChild(pointInfo);
-
-    const navigateButton = document.createElement('button');
-    navigateButton.id = 'navigate-button';
-    navigateButton.innerText = 'Navigate';
-    infoBox.appendChild(navigateButton);
-
-    navigateButton.addEventListener('click', () => {
-        if (currentCoordinates) {
-            const lat = currentCoordinates.lat;
-            const lng = currentCoordinates.lng;
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-            let url;
-
-            if (/android/i.test(userAgent)) {
-                url = `geo:${lat},${lng}?q=${lat},${lng}`;
-            } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                url = `maps://maps.apple.com/?daddr=${lat},${lng}`;
-            } else {
-                url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-            }
-
-            window.location.href = url;
-        }
-    });
-
-    return infoBox;
-}
+// Ajout du mode sombre
+document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+});
