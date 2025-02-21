@@ -30,40 +30,30 @@ document.addEventListener('DOMContentLoaded', () => {
     map.addControl(searchControl);
 });
 
-function showPopup(e, properties) {
+function showSidebar(e, properties) {
     currentCoordinates = e.latlng;
-    let infoBox = document.getElementById('info-box');
-    let overlay = document.getElementById('popup-overlay');
-    if (infoBox) {
-        infoBox.remove();
-    }
-    if (overlay) {
-        overlay.remove();
-    }
-    infoBox = createPopupContent(properties);
-    overlay = createOverlay();
-    document.body.appendChild(overlay);
-    document.body.appendChild(infoBox);
-    infoBox.classList.add('show');
-    overlay.classList.add('show');
+    let sidebar = document.getElementById('sidebar');
+    let sidebarContent = document.getElementById('sidebar-content');
+    
+    // Utiliser createPopupContent pour générer le contenu
+    let content = createPopupContent(properties);
+    sidebarContent.innerHTML = '';
+    sidebarContent.appendChild(content);
+
+    // Afficher le panneau latéral
+    sidebar.classList.add('show');
 }
 
-function hidePopup() {
-    let infoBox = document.getElementById('info-box');
-    let overlay = document.getElementById('popup-overlay');
-    if (infoBox) {
-        infoBox.classList.remove('show');
-        setTimeout(() => infoBox.remove(), 300); // Matches the transition duration
-    }
-    if (overlay) {
-        overlay.classList.remove('show');
-        setTimeout(() => overlay.remove(), 300); // Matches the transition duration
-    }
+function hideSidebar() {
+    let sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('show');
 }
+
+document.getElementById('close-sidebar').addEventListener('click', hideSidebar);
 
 function onEachFeature(feature, layer) {
     layer.on('click', function (e) {
-        showPopup(e, feature.properties);
+        showSidebar(e, feature.properties);
     });
 }
 
@@ -112,12 +102,4 @@ function createPopupContent(properties) {
     });
 
     return infoBox;
-}
-
-function createOverlay() {
-    const overlay = document.createElement('div');
-    overlay.id = 'popup-overlay';
-    overlay.className = 'popup-overlay';
-    overlay.addEventListener('click', hidePopup);
-    return overlay;
 }
