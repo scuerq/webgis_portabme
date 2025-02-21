@@ -23,9 +23,9 @@ body, html {
 
 .sidebar {
     position: absolute;
-    right: -300px;
+    right: -300px; /* Ensure the sidebar is hidden initially */
     top: 0;
-    width: 100vh;
+    width: 300px; /* Adjusted width to 300px */
     height: 100%;
     background: white;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
@@ -34,7 +34,7 @@ body, html {
 }
 
 .sidebar.show {
-    right: 0;
+    right: 0; /* Show the sidebar when the .show class is added */
 }
 
 .sidebar-content {
