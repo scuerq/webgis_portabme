@@ -41,6 +41,8 @@ body, html {
     top: 50px;
     padding: 20px;
     left: auto;
+    height: 100%;
+    width: 100%;
     overflow-y: auto;
     max-height: calc(100% - 50px); /* Adjust as needed for header/footer space */
     box-sizing: border-box;
