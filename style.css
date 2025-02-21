@@ -36,3 +36,20 @@ body, html {
 .sidebar.show {
     right: 0;
 }
+
+.sidebar-content {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100% - 50px); /* Adjust as needed for header/footer space */
+    box-sizing: border-box;
+}
+
+.sidebar-content strong {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.sidebar-content button {
+    margin-top: 20px;
+}
