@@ -37,7 +37,7 @@ map.fitBounds(geojsonLayer.getBounds());
 // Ajout du contrôle de recherche
 var searchControl = new L.Control.Search({
     layer: geojsonLayer,
-    propertyName: 'Libellé',
+    propertyName: 'Libelle',
     marker: false,
     moveToLocation: function(latlng, title, map) {
         map.setView(latlng, 17);
