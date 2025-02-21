@@ -1,61 +1,58 @@
+/* Styles généraux */
 body, html {
     height: 100%;
     margin: 0;
-    padding: 0;
+    font-family: Arial, sans-serif;
+    transition: background 0.3s, color 0.3s;
 }
 
 #map {
-    height: 100%;
+    height: 100vh;
 }
 
-#navigate-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#navigate-button:hover {
-    background-color: #0056b3;
-}
-
+/* Panneau latéral */
 .sidebar {
-    position: absolute;
-    right: -300px; /* Ensure the sidebar is hidden initially */
+    position: fixed;
+    right: -300px;
     top: 0;
-    width: 300px; /* Adjusted width to 300px */
+    width: 300px;
     height: 100%;
     background: white;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
     transition: right 0.3s;
     z-index: 1000;
+    padding: 20px;
 }
 
 .sidebar.show {
-    right: 0; /* Show the sidebar when the .show class is added */
+    right: 0;
 }
 
-.sidebar-content {
-    top: 50px;
-    padding: 20px;
-    left: auto;
-    height: 100%;
-    width: 100%;
-    overflow-y: auto;
-    max-height: calc(100% - 50px); /* Adjust as needed for header/footer space */
-    box-sizing: border-box;
-    position: absolute;
-}
-
-.sidebar-content strong {
-    display: block;
-    left: auto;
+#close-sidebar {
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
     margin-bottom: 10px;
-    color: #333;
 }
 
-.sidebar-content button {
-    margin-top: 20px;
+/* Boutons interactifs */
+.leaflet-control-custom {
+    background: white;
+    padding: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    border-radius: 5px;
+}
+
+/* Mode sombre */
+.dark-mode {
+    background: #1e1e1e;
+    color: white;
+}
+
+.dark-mode .sidebar {
+    background: #333;
+    color: white;
 }
