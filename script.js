@@ -52,6 +52,31 @@ function showSidebar(e, properties) {
     Object.entries(properties).forEach(([key, value]) => {
         sidebarContent.innerHTML += `<p><strong>${key}:</strong> ${value}</p>`;
     });
+
+    // Ajout du bouton "Y aller"
+    let navigateButton = document.createElement('button');
+    navigateButton.id = 'navigate-button';
+    navigateButton.innerText = 'Y aller';
+    navigateButton.onclick = function() {
+        if (e.latlng) {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            let url;
+
+            if (/android/i.test(userAgent)) {
+                url = `geo:${lat},${lng}?q=${lat},${lng}`;
+            } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                url = `maps://maps.apple.com/?daddr=${lat},${lng}`;
+            } else {
+                url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+            }
+
+            window.location.href = url;
+        }
+    };
+    sidebarContent.appendChild(navigateButton);
+    
     sidebar.classList.add('show');
 }
 
