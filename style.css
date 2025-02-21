@@ -44,6 +44,7 @@ body, html {
     overflow-y: auto;
     max-height: calc(100% - 50px); /* Adjust as needed for header/footer space */
     box-sizing: border-box;
+    position: absolute;
 }
 
 .sidebar-content strong {
