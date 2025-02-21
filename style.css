@@ -56,3 +56,21 @@ body, html {
     background: #333;
     color: white;
 }
+
+/* Style du bouton "Y aller" */
+#navigate-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+}
+
+#navigate-button:hover {
+    background-color: #0056b3;
+}
