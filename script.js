@@ -60,15 +60,15 @@ function onEachFeature(feature, layer) {
 function createPopupContent(properties) {
     const infoBox = document.createElement('div');
     infoBox.id = 'info-box';
-    infoBox.className = 'popup';
+    infoBox.className = 'sidebar';
 
     const title = document.createElement('div');
-    title.className = 'popup-header';
+    title.className = 'sidebar-header';
     title.innerText = 'Point Information';
     infoBox.appendChild(title);
 
     const pointInfo = document.createElement('div');
-    pointInfo.className = 'popup-content';
+    pointInfo.className = 'sidebar-content';
     let propertiesHtml = '';
     for (const [key, value] of Object.entries(properties)) {
         propertiesHtml += `<strong>${key}</strong>: ${value}<br>`;
